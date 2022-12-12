@@ -17,16 +17,12 @@ import * as SplashScreen from "expo-splash-screen";
 
 SplashScreen.preventAutoHideAsync();
 
-const initialState = {
-  email: "",
-  password: "",
-};
-
 const window = Dimensions.get("window").width - 16 * 2;
 
 const LoginScreen = () => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const [state, setState] = useState(initialState);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [dimensions, setDimensions] = useState(window);
 
   const [passwordVisibility, setPasswordVisibility] = useState(true);
@@ -85,9 +81,11 @@ const LoginScreen = () => {
   const onSubmit = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log(initialState)
-    setState(initialState);
-  }
+    console.log("email:", email);
+    console.log("password:", password);
+    setEmail("");
+    setPassword("");
+  };
   return (
     <TouchableWithoutFeedback
       onPress={keyboardHide}
@@ -118,7 +116,8 @@ const LoginScreen = () => {
                       borderColor: emailBorderColor,
                       backgroundColor: emailBackgroundColor,
                     }}
-                    value={state.email}
+                    value={email}
+                    onChangeText={(value) => setEmail(value)}
                     placeholder={"Email"}
                     onFocus={() => {
                       setEmailBorderColor("#FF6C00");
@@ -129,9 +128,6 @@ const LoginScreen = () => {
                       setEmailBackgroundColor("#F6F6F6");
                       setEmailBorderColor("#E8E8E8");
                     }}
-                    onChangeText={(value) =>
-                      setState((prevState) => ({ ...prevState, email: value }))
-                    }
                   />
                 </View>
                 <View style={{ marginTop: 16, position: "relative" }}>
@@ -143,7 +139,7 @@ const LoginScreen = () => {
                     }}
                     maxLength={15}
                     secureTextEntry={passwordVisibility}
-                    value={state.password}
+                    value={password}
                     placeholder={"Password"}
                     iconPosition="right"
                     onBlur={() => {
@@ -155,14 +151,9 @@ const LoginScreen = () => {
                       setPasswordBackgroundColor("transparent");
                       setIsShowKeyboard(true);
                     }}
-                    onChangeText={(value) =>
-                      setState((prevState) => ({
-                        ...prevState,
-                        password: value,
-                      }))
-                    }
+                    onChangeText={(value) => setPassword(value)}
                   />
-                  {state.password && (
+                  {password && (
                     <Pressable
                       onPress={handlePasswordVisibility}
                       style={{ position: "absolute", right: 16, top: 16 }}

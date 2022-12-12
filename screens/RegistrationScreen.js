@@ -34,6 +34,9 @@ const window = Dimensions.get("window").width - 16 * 2;
 const RegisterScreen = () => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
+  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [dimensions, setDimensions] = useState(window);
 
   const [passwordVisibility, setPasswordVisibility] = useState(true);
@@ -112,8 +115,11 @@ const RegisterScreen = () => {
   const onSubmit = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log(initialState)
-    setState(initialState);
+    console.log("login:", login, "email:", email, "password:", password)
+    setLogin("");
+    setEmail("");
+    setPassword("");
+    // console.log(initialState)
   }
 
   return (
@@ -181,7 +187,7 @@ const RegisterScreen = () => {
                       borderColor: loginBorderColor,
                       backgroundColor: loginBackgroundColor,
                     }}
-                    value={state.login}
+                    value={login}
                     placeholder={"Login"}
                     onFocus={() => {
                       setLoginBorderColor("#FF6C00");
@@ -192,9 +198,7 @@ const RegisterScreen = () => {
                       setLoginBackgroundColor("#F6F6F6");
                       setLoginBorderColor("#E8E8E8");
                     }}
-                    onChangeText={(value) =>
-                      setState((prevState) => ({ ...prevState, login: value }))
-                    }
+                    onChangeText={(value) => setLogin(value)}
                   />
                 </View>
                 <View style={{ marginTop: 16 }}>
@@ -204,7 +208,7 @@ const RegisterScreen = () => {
                       borderColor: emailBorderColor,
                       backgroundColor: emailBackgroundColor,
                     }}
-                    value={state.email}
+                    value={email}
                     placeholder={"Email"}
                     onFocus={() => {
                       setEmailBorderColor("#FF6C00");
@@ -215,9 +219,7 @@ const RegisterScreen = () => {
                       setEmailBackgroundColor("#F6F6F6");
                       setEmailBorderColor("#E8E8E8");
                     }}
-                    onChangeText={(value) =>
-                      setState((prevState) => ({ ...prevState, email: value }))
-                    }
+                    onChangeText={(value) => setEmail(value)}
                   />
                 </View>
                 <View style={{ marginTop: 16, position: "relative" }}>
@@ -229,7 +231,7 @@ const RegisterScreen = () => {
                     }}
                     maxLength={15}
                     secureTextEntry={passwordVisibility}
-                    value={state.password}
+                    value={password}
                     placeholder={"Password"}
                     onBlur={() => {
                       setPasswordBorderColor("#E8E8E8");
@@ -240,14 +242,9 @@ const RegisterScreen = () => {
                       setPasswordBackgroundColor("transparent");
                       setIsShowKeyboard(true);
                     }}
-                    onChangeText={(value) =>
-                      setState((prevState) => ({
-                        ...prevState,
-                        password: value,
-                      }))
-                    }
+                    onChangeText={(value) => setPassword(value)}
                   />
-                  {state.password && (
+                  {password && (
                     <Pressable
                       onPress={handlePasswordVisibility}
                       style={{ position: "absolute", right: 16, top: 16 }}

@@ -80,9 +80,14 @@ const LoginScreen = () => {
   const keyboardHide = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    setState(initialState);
   };
 
+  const onSubmit = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+    console.log(initialState)
+    setState(initialState);
+  }
   return (
     <TouchableWithoutFeedback
       onPress={keyboardHide}
@@ -171,7 +176,7 @@ const LoginScreen = () => {
                 <TouchableOpacity
                   style={styles.btn}
                   activeOpacity={0.7}
-                  onPress={keyboardHide}
+                  onPress={onSubmit}
                 >
                   <Text style={styles.btnTitle}>Sign in</Text>
                 </TouchableOpacity>

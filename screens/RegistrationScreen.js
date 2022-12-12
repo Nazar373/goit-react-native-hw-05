@@ -107,9 +107,14 @@ const RegisterScreen = () => {
   const keyboardHide = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log(state)
-    setState(initialState);
   };
+
+  const onSubmit = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+    console.log(initialState)
+    setState(initialState);
+  }
 
   return (
     <TouchableWithoutFeedback
@@ -256,7 +261,7 @@ const RegisterScreen = () => {
                 <TouchableOpacity
                   style={styles.btn}
                   activeOpacity={0.7}
-                  onPress={keyboardHide}
+                  onPress={onSubmit}
                 >
                   <Text style={styles.btnTitle}>Sign up</Text>
                 </TouchableOpacity>

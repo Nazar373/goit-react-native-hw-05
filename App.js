@@ -1,16 +1,16 @@
 import { LogBox } from "react-native";
-
-import LoginScreen from "./screens/LoginScreen";
-import RegisterScreen from "./screens/RegistrationScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { useRoute } from "./router";
 
 LogBox.ignoreLogs(['Remote debugger']);
 
+
+
 export default function App() {
+  const routing = useRoute(false)
   return (
-    <>
-      {/* <LoginScreen /> */}
-      <RegisterScreen />
-      </>
-      
+  <NavigationContainer>
+    {routing}
+  </NavigationContainer>
   );
 }

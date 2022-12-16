@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   Pressable,
+  Button,
 } from "react-native";
 import { useState, useCallback, useEffect } from "react";
 import { useFonts } from "expo-font";
@@ -19,7 +20,7 @@ SplashScreen.preventAutoHideAsync();
 
 const window = Dimensions.get("window").width - 16 * 2;
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,8 +53,8 @@ const LoginScreen = () => {
   }, [dimensions]);
 
   const [fontsLoaded] = useFonts({
-    Regular: require("../assets/fonts/Roboto-Regular.ttf"),
-    Bold: require("../assets/fonts/Roboto-Bold.ttf"),
+    Regular: require("../../assets/fonts/Roboto-Regular.ttf"),
+    Bold: require("../../assets/fonts/Roboto-Bold.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -85,6 +86,7 @@ const LoginScreen = () => {
     console.log("password:", password);
     setEmail("");
     setPassword("");
+    navigation.navigate("Home")
   };
   return (
     <TouchableWithoutFeedback
@@ -93,7 +95,7 @@ const LoginScreen = () => {
     >
       <View style={styles.container}>
         <ImageBackground
-          source={require("../assets/backgroundImg.png")}
+          source={require("../../assets/backgroundImg.png")}
           resizeMode="cover"
           style={styles.image}
         >
@@ -171,7 +173,14 @@ const LoginScreen = () => {
                 >
                   <Text style={styles.btnTitle}>Sign in</Text>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.7}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Registration")}
+                  activeOpacity={0.7}
+                >
+                  {/* <Button title="Don't have an account? Sign up"
+                  style={styles.btnRelocate}
+                  onPress={() => navigation.navigate("Registration")}
+                   /> */}
                   <Text style={styles.btnRelocate}>
                     Don't have an account? Sign up
                   </Text>

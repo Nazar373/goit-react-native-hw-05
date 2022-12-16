@@ -13,8 +13,8 @@ import {
   Button,
   Image,
 } from "react-native";
-import AddPhoto from "../assets/add.png";
-import DeletePhoto from "../assets/delete.png"
+import AddPhoto from "../../assets/add.png";
+import DeletePhoto from "../../assets/delete.png";
 import { useState, useCallback, useEffect } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -23,17 +23,10 @@ import * as ImagePicker from "expo-image-picker";
 
 SplashScreen.preventAutoHideAsync();
 
-const initialState = {
-  login: "",
-  email: "",
-  password: "",
-};
-
 const window = Dimensions.get("window").width - 16 * 2;
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ navigation }) => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const [state, setState] = useState(initialState);
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -86,8 +79,8 @@ const RegisterScreen = () => {
   }, [dimensions]);
 
   const [fontsLoaded] = useFonts({
-    Regular: require("../assets/fonts/Roboto-Regular.ttf"),
-    Bold: require("../assets/fonts/Roboto-Bold.ttf"),
+    Regular: require("../../assets/fonts/Roboto-Regular.ttf"),
+    Bold: require("../../assets/fonts/Roboto-Bold.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -115,12 +108,11 @@ const RegisterScreen = () => {
   const onSubmit = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log("login:", login, "email:", email, "password:", password)
+    console.log("login:", login, "email:", email, "password:", password);
     setLogin("");
     setEmail("");
     setPassword("");
-    // console.log(initialState)
-  }
+  };
 
   return (
     <TouchableWithoutFeedback
@@ -129,7 +121,7 @@ const RegisterScreen = () => {
     >
       <View style={styles.container}>
         <ImageBackground
-          source={require("../assets/backgroundImg.png")}
+          source={require("../../assets/backgroundImg.png")}
           resizeMode="cover"
           style={styles.image}
         >
@@ -155,22 +147,30 @@ const RegisterScreen = () => {
                     {
                       image ? (
                         <>
-                          <Image source={{ uri: image }} style={{width: 120, height: 120, borderRadius: 16,}} />
-                          <TouchableOpacity onPress={pickImage}>
                           <Image
-                            source={DeletePhoto}
-                            style={{position: "absolute", right: -80, top: -46}}
+                            source={{ uri: image }}
+                            style={{
+                              width: 120,
+                              height: 120,
+                              borderRadius: 16,
+                            }}
                           />
-                        </TouchableOpacity>
+                          <TouchableOpacity onPress={pickImage}>
+                            <Image
+                              source={DeletePhoto}
+                              style={{
+                                position: "absolute",
+                                right: -80,
+                                top: -46,
+                              }}
+                            />
+                          </TouchableOpacity>
                         </>
                       ) : (
                         // <Button onPress={pickImage}>
                         // {/* <AddPhoto /> */}
                         <TouchableOpacity onPress={pickImage}>
-                          <Image
-                            source={AddPhoto}
-                            style={styles.addIcon}
-                          />
+                          <Image source={AddPhoto} style={styles.addIcon} />
                         </TouchableOpacity>
                       )
                       // </Button>
@@ -262,7 +262,10 @@ const RegisterScreen = () => {
                 >
                   <Text style={styles.btnTitle}>Sign up</Text>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.7}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Login")}
+                  activeOpacity={0.7}
+                >
                   <Text style={styles.btnRelocate}>
                     Already have an account? Sign in
                   </Text>
@@ -299,13 +302,13 @@ const styles = StyleSheet.create({
     height: 120,
     backgroundColor: "#F6F6F6",
     borderRadius: 16,
-    alignItems: "flex-end"
+    alignItems: "flex-end",
   },
   addIcon: {
     height: 25,
     width: 25,
     bottom: -36,
-    right: -13
+    right: -13,
   },
   title: {
     fontFamily: "Bold",

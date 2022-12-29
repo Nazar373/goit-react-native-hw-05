@@ -79,4 +79,5 @@ const styles = StyleSheet.create({
     color: "black",
   },
 });
+// test
 export default Home;

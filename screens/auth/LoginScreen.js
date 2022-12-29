@@ -82,11 +82,9 @@ const LoginScreen = ({ navigation }) => {
   const onSubmit = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log("email:", email);
-    console.log("password:", password);
     setEmail("");
     setPassword("");
-    navigation.navigate("Home")
+    navigation.navigate("Home");
   };
   return (
     <TouchableWithoutFeedback
